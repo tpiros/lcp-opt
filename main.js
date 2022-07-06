@@ -1,0 +1,72 @@
+(async () => {
+  class NavBar extends HTMLElement {
+    connectedCallback() {
+      this.innerHTML = `<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">LCP</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="lazy.html">Lazy Loading</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>`;
+    }
+  }
+  window.customElements.define('nav-bar', NavBar);
+
+  const allPhotos = await (await fetch('photos.json')).json();
+  const photos = allPhotos.slice(0, 5);
+  const gallery = document.getElementById('gallery');
+  const mainPhoto = photos.shift();
+
+  // gallery
+  // <div class="col-12 mb-1">
+  //   <div class="lightbox">
+  //     <img src="img/1.jpg" alt="Gallery image 1" class="active w-100" />
+  //   </div>
+  // </div>
+  // <div class="col-3 mt-1">
+  //   <img src="img/2.jpg" alt="Gallery image 1" class="w-100" />
+  // </div>
+
+  const mainPhotoContainerDiv = document.createElement('div');
+  mainPhotoContainerDiv.classList.add('col-12', 'mb-1');
+  const mainPhotoDiv = document.createElement('div');
+  mainPhotoDiv.classList.add('mainphoto');
+  const mainImg = new Image();
+  mainImg.classList.add('active', 'w-100');
+  mainImg.src = `img/${mainPhoto.src}`;
+  if (window.location.pathname.includes('lazy')) {
+    mainImg.setAttribute('loading', 'lazy');
+  }
+  mainPhotoDiv.appendChild(mainImg);
+  mainPhotoContainerDiv.appendChild(mainPhotoDiv);
+  gallery.appendChild(mainPhotoDiv);
+
+  photos.forEach((photo) => {
+    const imgDiv = document.createElement('div');
+    imgDiv.classList.add('col-3', 'mt-1');
+    const img = new Image();
+    img.classList.add('w-100');
+    img.src = `img/${photo.src}`;
+    imgDiv.appendChild(img);
+    gallery.appendChild(imgDiv);
+  });
+})();
