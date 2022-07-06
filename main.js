@@ -23,6 +23,9 @@
             <li class="nav-item">
               <a class="nav-link" href="lazy.html">Lazy Loading</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="cloudinary.html">Cloudinary</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -52,7 +55,11 @@
   mainPhotoDiv.classList.add('mainphoto');
   const mainImg = new Image();
   mainImg.classList.add('active', 'w-100');
-  mainImg.src = `img/${mainPhoto.src}`;
+  if (window.location.pathname.includes('cloudinary')) {
+    mainImg.src = `https://res.cloudinary.com/tamas-demo/image/upload/f_auto,q_auto/lcp/${mainPhoto.src}`;
+  } else {
+    mainImg.src = `img/${mainPhoto.src}`;
+  }
   if (window.location.pathname.includes('lazy')) {
     mainImg.setAttribute('loading', 'lazy');
   }
@@ -65,7 +72,11 @@
     imgDiv.classList.add('col-3', 'mt-1');
     const img = new Image();
     img.classList.add('w-100');
-    img.src = `img/${photo.src}`;
+    if (window.location.pathname.includes('cloudinary')) {
+      img.src = `https://res.cloudinary.com/tamas-demo/image/upload/f_auto,q_auto/lcp/${photo.src}`;
+    } else {
+      img.src = `img/${photo.src}`;
+    }
     imgDiv.appendChild(img);
     gallery.appendChild(imgDiv);
   });
