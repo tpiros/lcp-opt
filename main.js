@@ -84,7 +84,7 @@
     const mainImg = new Image();
     mainImg.classList.add('active', 'w-100');
     if (window.location.pathname.includes('cloudinary')) {
-      mainImg.src = `https://res.cloudinary.com/tamas-demo/image/upload/f_auto,q_auto/lcp/${mainPhoto.src}`;
+      mainImg.src = `https://res.cloudinary.com/tamas-demo/image/upload/w_776,f_auto,q_auto/lcp/${mainPhoto.src}`;
     } else {
       mainImg.src = `img/${mainPhoto.src}`;
     }
@@ -101,7 +101,7 @@
       const img = new Image();
       img.classList.add('w-100');
       if (window.location.pathname.includes('cloudinary')) {
-        img.src = `https://res.cloudinary.com/tamas-demo/image/upload/f_auto,q_auto/lcp/${photo.src}`;
+        img.src = `https://res.cloudinary.com/tamas-demo/image/upload/w_176,f_auto,q_auto/lcp/${photo.src}`;
       } else {
         img.src = `img/${photo.src}`;
       }
