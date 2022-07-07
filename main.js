@@ -59,9 +59,10 @@
   window.customElements.define('nav-bar', NavBar);
 
   if (
-    !window.location.pathname.includes('ssg') ||
+    !window.location.pathname.includes('ssg') &&
     !window.location.pathname.includes('all')
   ) {
+    console.log('location', window.location.pathname);
     const allPhotos = await (await fetch('photos.json')).json();
     const photos = allPhotos.slice(0, 5);
     const gallery = document.getElementById('gallery');
