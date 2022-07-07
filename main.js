@@ -30,11 +30,6 @@
             </li>
             <li class="nav-item">
               <a class="nav-link ${
-                window.location.pathname === '/cloudinary.html' ? isActive : ''
-              }" href="cloudinary.html">Cloudinary</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link ${
                 window.location.pathname === '/fetchpriority.html'
                   ? isActive
                   : ''
@@ -45,6 +40,16 @@
                 window.location.pathname === '/ssg.html' ? isActive : ''
               }" href="ssg.html">SSG</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link ${
+                window.location.pathname === '/cloudinary.html' ? isActive : ''
+              }" href="cloudinary.html">Cloudinary</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link ${
+                window.location.pathname === '/all.html' ? isActive : ''
+              }" href="cloudinary.html">All Together</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -53,7 +58,10 @@
   }
   window.customElements.define('nav-bar', NavBar);
 
-  if (!window.location.pathname.includes('ssg')) {
+  if (
+    !window.location.pathname.includes('ssg') ||
+    !window.location.pathname.includes('all')
+  ) {
     const allPhotos = await (await fetch('photos.json')).json();
     const photos = allPhotos.slice(0, 5);
     const gallery = document.getElementById('gallery');
