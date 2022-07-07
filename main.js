@@ -48,7 +48,7 @@
             <li class="nav-item">
               <a class="nav-link ${
                 window.location.pathname === '/all.html' ? isActive : ''
-              }" href="cloudinary.html">All Together</a>
+              }" href="all.html">All Together</a>
             </li>
           </ul>
         </div>
