@@ -40,6 +40,11 @@
                   : ''
               }" href="fetchpriority.html">Fetch Priority</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link ${
+                window.location.pathname === '/ssg.html' ? isActive : ''
+              }" href="ssg.html">SSG</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -48,50 +53,52 @@
   }
   window.customElements.define('nav-bar', NavBar);
 
-  const allPhotos = await (await fetch('photos.json')).json();
-  const photos = allPhotos.slice(0, 5);
-  const gallery = document.getElementById('gallery');
-  const mainPhoto = photos.shift();
+  if (!window.location.pathname.includes('ssg')) {
+    const allPhotos = await (await fetch('photos.json')).json();
+    const photos = allPhotos.slice(0, 5);
+    const gallery = document.getElementById('gallery');
+    const mainPhoto = photos.shift();
 
-  // gallery
-  // <div class="col-12 mb-1">
-  //   <div class="lightbox">
-  //     <img src="img/1.jpg" alt="Gallery image 1" class="active w-100" />
-  //   </div>
-  // </div>
-  // <div class="col-3 mt-1">
-  //   <img src="img/2.jpg" alt="Gallery image 1" class="w-100" />
-  // </div>
+    // gallery
+    // <div class="col-12 mb-1">
+    //   <div class="lightbox">
+    //     <img src="img/1.jpg" alt="Gallery image 1" class="active w-100" />
+    //   </div>
+    // </div>
+    // <div class="col-3 mt-1">
+    //   <img src="img/2.jpg" alt="Gallery image 1" class="w-100" />
+    // </div>
 
-  const mainPhotoContainerDiv = document.createElement('div');
-  mainPhotoContainerDiv.classList.add('col-12', 'mb-1');
-  const mainPhotoDiv = document.createElement('div');
-  mainPhotoDiv.classList.add('mainphoto');
-  const mainImg = new Image();
-  mainImg.classList.add('active', 'w-100');
-  if (window.location.pathname.includes('cloudinary')) {
-    mainImg.src = `https://res.cloudinary.com/tamas-demo/image/upload/f_auto,q_auto/lcp/${mainPhoto.src}`;
-  } else {
-    mainImg.src = `img/${mainPhoto.src}`;
-  }
-  if (window.location.pathname.includes('lazy')) {
-    mainImg.setAttribute('loading', 'lazy');
-  }
-  mainPhotoDiv.appendChild(mainImg);
-  mainPhotoContainerDiv.appendChild(mainPhotoDiv);
-  gallery.appendChild(mainPhotoDiv);
-
-  photos.forEach((photo) => {
-    const imgDiv = document.createElement('div');
-    imgDiv.classList.add('col-3', 'mt-1');
-    const img = new Image();
-    img.classList.add('w-100');
+    const mainPhotoContainerDiv = document.createElement('div');
+    mainPhotoContainerDiv.classList.add('col-12', 'mb-1');
+    const mainPhotoDiv = document.createElement('div');
+    mainPhotoDiv.classList.add('mainphoto');
+    const mainImg = new Image();
+    mainImg.classList.add('active', 'w-100');
     if (window.location.pathname.includes('cloudinary')) {
-      img.src = `https://res.cloudinary.com/tamas-demo/image/upload/f_auto,q_auto/lcp/${photo.src}`;
+      mainImg.src = `https://res.cloudinary.com/tamas-demo/image/upload/f_auto,q_auto/lcp/${mainPhoto.src}`;
     } else {
-      img.src = `img/${photo.src}`;
+      mainImg.src = `img/${mainPhoto.src}`;
     }
-    imgDiv.appendChild(img);
-    gallery.appendChild(imgDiv);
-  });
+    if (window.location.pathname.includes('lazy')) {
+      mainImg.setAttribute('loading', 'lazy');
+    }
+    mainPhotoDiv.appendChild(mainImg);
+    mainPhotoContainerDiv.appendChild(mainPhotoDiv);
+    gallery.appendChild(mainPhotoDiv);
+
+    photos.forEach((photo) => {
+      const imgDiv = document.createElement('div');
+      imgDiv.classList.add('col-3', 'mt-1');
+      const img = new Image();
+      img.classList.add('w-100');
+      if (window.location.pathname.includes('cloudinary')) {
+        img.src = `https://res.cloudinary.com/tamas-demo/image/upload/f_auto,q_auto/lcp/${photo.src}`;
+      } else {
+        img.src = `img/${photo.src}`;
+      }
+      imgDiv.appendChild(img);
+      gallery.appendChild(imgDiv);
+    });
+  }
 })();
